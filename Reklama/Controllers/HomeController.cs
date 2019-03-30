@@ -17,7 +17,7 @@ using PagedList;
 
 namespace Reklama.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : _BaseController
     {
         private ReklamaContext rc = new ReklamaContext();
 
@@ -65,10 +65,21 @@ namespace Reklama.Controllers
         public ActionResult Index()
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
             return View();
+            return IsMobileDevice() ? View("IndexMobile") : View("Index");
         }
 
+        public ActionResult IndexMobile()
+        {
+            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+            var model = _realtyRepository.Read().OrderByDescending(x => x.CreatedAt).Take(4).ToList();
+            return View("IndexMobile", model);
+        }
+
+        public ActionResult FiltersMobile()
+        {
+            return View("FiltersMobile");
+        }
 
         [ChildActionOnly]
         public ActionResult PopularSectionsInCatalog()

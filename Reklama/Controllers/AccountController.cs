@@ -18,7 +18,7 @@ namespace Reklama.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]
-    public class AccountController : Controller
+    public class AccountController : _BaseController
     {
         // For line #282
         private readonly IProfileRepository _profileRepository;
@@ -37,7 +37,15 @@ namespace Reklama.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            return View("Login");
+            return IsMobileDevice() ? View("LoginMobile") : View("Login");
+        }
+
+        [AllowAnonymous]
+        public ActionResult LoginMobile(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View("LoginMobile");
         }
 
         //

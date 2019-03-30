@@ -1,0 +1,22 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/bundles/styles/bootstrap")
+    @Styles.Render("~/bundles/styles/fontawesome")
+    @Styles.Render("~/bundles/styles/main-mobile")
+    <title>www.reklama.tm</title>
+</head>
+<body>
+    <div class="container-fluid p-0 h-100 bg-silver">
+        @RenderBody()
+    </div>
+    @Scripts.Render("~/bundles/js/bootstrap")
+</body>
+</html>

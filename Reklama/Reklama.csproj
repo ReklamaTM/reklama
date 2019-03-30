@@ -221,6 +221,7 @@
     <Compile Include="Areas\CatalogAdmin\Models\EditProductPageViewModel.cs" />
     <Compile Include="Areas\CatalogAdmin\Models\IndexProductPageViewModel.cs" />
     <Compile Include="Controllers\Home1Controller.cs" />
+    <Compile Include="Controllers\_BaseController.cs" />
     <Compile Include="Utils\Attributes\CustomRealtyEditAuth.cs" />
     <Compile Include="Utils\Attributes\CustomRealtyAuth.cs" />
     <Compile Include="Utils\Attributes\CustomAnnouncementAuth.cs" />
@@ -3478,6 +3479,8 @@
     <Content Include="webfonts\fa-brands-400.woff" />
     <Content Include="webfonts\fa-brands-400.ttf" />
     <Content Include="webfonts\fa-brands-400.eot" />
+    <Content Include="Views\Home\Main.cshtml" />
+    <Content Include="Views\Home\FiltersMobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3485,7 +3488,7 @@
     <Folder Include="Images\Users\Avatars\" />
     <Folder Include="Scripts\tiny_mce\plugins\spellchecker\classes\utils\" />
     <Folder Include="Scripts\tiny_mce\plugins\spellchecker\includes\" />
-    <Folder Include="Views\Home1\" />
+    <Folder Include="Views\_Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

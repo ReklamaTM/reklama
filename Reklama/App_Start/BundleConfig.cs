@@ -63,6 +63,23 @@ namespace Reklama.App_Start
                    "~/Scripts/mobile/angular.min.js",
                    "~/Scripts/mobile/advPage.js"
                 ));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/bootstrap")
+                .Include(
+                    "~/Scripts/jquery-3.0.0.min.js",
+                    "~/Scripts/umd/popper.min.js",
+                    "~/Scripts/bootstrap.min.js"
+                ));
+
+            bundles.Add(new StyleBundle("~/bundles/styles/bootstrap")
+               .Include(
+                   "~/Content/bootstrap.min.css"
+               ));
+            bundles.Add(new StyleBundle("~/bundles/styles/main-mobile")
+               .Include(
+                   "~/Content/main-mobile.css"
+               ));
+            bundles.Add(new StyleBundle("~/bundles/styles/fontawesome").Include("~/Content/fontawesome-all.min.css"));
         }
 
         public static void RegisterMobileBundles(BundleCollection bundles)
