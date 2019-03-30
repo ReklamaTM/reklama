@@ -1,0 +1,24 @@
+﻿body, html {
+    height: 100%;
+    display: block;
+}
+
+.bg-blue {
+    /*background: url(data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 …#b)" d="M201.189 48v92.13H1V92.179z" transform="translate(-1)"/></g></svg>) #2496ca no-repeat;*/
+    /*background-size: cover;*/
+    padding: 50px 10px;
+    /*background-position-y: -23vw;*/
+    background: linear-gradient(to bottom, #2496ca, #2a7496);
+}
+
+.img-logo {
+    width: 50%;
+    height: auto;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
