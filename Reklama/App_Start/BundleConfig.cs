@@ -79,7 +79,7 @@ namespace Reklama.App_Start
                .Include(
                    "~/Content/main-mobile.css"
                ));
-            bundles.Add(new StyleBundle("~/bundles/styles/fontawesome").Include("~/Content/fontawesome-all.min.css"));
+            bundles.Add(new StyleBundle("~/bundles/styles/fontawesome").Include("~/Content/fontawesome-all.min.css", new CssRewriteUrlTransform()));
         }
 
         public static void RegisterMobileBundles(BundleCollection bundles)

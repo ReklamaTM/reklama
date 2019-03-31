@@ -6,7 +6,7 @@ namespace Reklama.Controllers
     {
         protected bool IsMobileDevice ()
         {
-            return true;
+            //return true;
             return Request.Browser.IsMobileDevice;
         }
     }

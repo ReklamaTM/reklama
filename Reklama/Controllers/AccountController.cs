@@ -37,7 +37,7 @@ namespace Reklama.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View("Login");
+            //return View("Login");
             return IsMobileDevice() ? View("LoginMobile") : View("Login");
         }
 
