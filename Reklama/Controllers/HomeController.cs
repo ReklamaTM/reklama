@@ -73,7 +73,7 @@ namespace Reklama.Controllers
         public ActionResult IndexMobile()
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-            var model = _realtyRepository.Read().OrderByDescending(x => x.CreatedAt).Take(4).ToList();
+            var model = _realtyRepository.Read().OrderByDescending(x => x.CreatedAt).Take(100).ToList();
             return View("IndexMobile", model);
         }
 

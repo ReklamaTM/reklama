@@ -65,6 +65,11 @@
                 defaults: new { controller = "Realty", action = "Create" });
 
             routes.MapRoute(
+               name: "IgnoreRedirectRealtyCreateMobile",
+               url: "Realty/CreateMobile",
+               defaults: new { controller = "Realty", action = "CreateMobile" });
+
+            routes.MapRoute(
                 name: "IgnoreRedirectRealtyEdit",
                 url: "Realty/Edit/{id}",
                 defaults: new { controller = "Realty", action = "Edit", id = UrlParameter.Optional });
