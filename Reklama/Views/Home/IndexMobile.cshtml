@@ -28,22 +28,22 @@
                         @:<div class="item blue">
                             @:<div class="bg blue"></div>
                             break;
-                        case 2:
-                            @:<div class="item purple">
-                                @:<div class="bg purple"></div>
+                    case 2:
+                        @:<div class="item purple">
+                            @:<div class="bg purple"></div>
                                 break;
-                            case 3:
-                                @:<div class="item green">
-                                    @:<div class="bg green"></div>
+                    case 3:
+                        @:<div class="item green">
+                            @:<div class="bg green"></div>
                                     break;
-                            }
+                }
 
-                            <div class="img">
-                                @if (realty.Photos.Count != 0)
-                                {
-                                    <div class="icon-wrapper">
-                                        <img data-toggle="modal" data-target="@("#item-modal-"+realty.Id)" src="@string.Concat("/", ProjectConfiguration.Get.FilePaths["realty_thumb"], "/", realty.Photos.OrderBy(x => x.CreatedAt).First().Link)" />
-                                    </div>
+                <div class="img">
+                    @if (realty.Photos.Count != 0)
+                    {
+                        <div class="icon-wrapper">
+                            <img data-toggle="modal" data-target="@("#item-modal-"+realty.Id)" src="@string.Concat("/", ProjectConfiguration.Get.FilePaths["realty_thumb"], "/", realty.Photos.OrderBy(x => x.CreatedAt).First().Link)" />
+                        </div>
 
                                     <!-- Modal for images-->
                                     <div class="modal fade" id="@("item-modal-"+realty.Id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -75,29 +75,29 @@
                                             </div>
                                         </div>
                                     </div>
-                                }
-                                else
-                                {
-                                    switch (color)
-                                    {
-                                        case 1:
-                                            <div class="icon-wrapper blue">
-                                                <i class="fa fa-home fa-3x"></i>
-                                            </div>
-                                            break;
-                                        case 2:
-                                            <div class="icon-wrapper purple">
-                                                <i class="fa fa-home fa-3x"></i>
-                                            </div>
-                                            break;
-                                        case 3:
-                                            <div class="icon-wrapper green">
-                                                <i class="fa fa-home fa-3x"></i>
-                                            </div>
-                                            break;
-                                    }
-                                }
-                            </div>
+                    }
+                    else
+                    {
+                        switch (color)
+                        {
+                            case 1:
+                                <div class="icon-wrapper blue">
+                                    <i class="fa fa-home fa-3x"></i>
+                                </div>
+                                break;
+                            case 2:
+                                <div class="icon-wrapper purple">
+                                    <i class="fa fa-home fa-3x"></i>
+                                </div>
+                                break;
+                            case 3:
+                                <div class="icon-wrapper green">
+                                    <i class="fa fa-home fa-3x"></i>
+                                </div>
+                                break;
+                        }
+                    }
+                </div>
                             <div class="info">
                                 <p>
                                     <i class="fa fa-map-marker"></i> @realty.City, @realty.Street
@@ -129,7 +129,7 @@
                                     <i class="fa fa-dollar-sign"></i>
                                 </p>
                             </div>
-                        @:</div>
+                            @:</div>
                     }
 
         </div>
