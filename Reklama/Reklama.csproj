@@ -3484,7 +3484,8 @@
     <Content Include="webfonts\fa-solid-900.woff2" />
     <Content Include="Views\Realty\CreateMobile.cshtml" />
     <Content Include="Views\Bookmarks\MyAnnouncementsMobile.cshtml" />
-    <Content Include="Views\Announcement\DeleteMobile.cshtml" />
+    <Content Include="Views\Realty\DeleteMobile.cshtml" />
+    <Content Include="Views\Realty\PlayStopMobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

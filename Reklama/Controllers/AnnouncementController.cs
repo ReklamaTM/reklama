@@ -454,51 +454,7 @@ namespace Reklama.Controllers
             }
 
             return View(announcement);
-        }
-
-        [HttpGet]
-        public ActionResult DeleteMobile(int id = 0)
-        {
-            var announcement = _repository.Read(id);
-            if (announcement == null) return HttpNotFound();
-
-            var isAnonumousUserCanEdit = _anonymousUserService.IsUserCanEdit(id);
-            if (WebSecurity.CurrentUserId != announcement.UserId && !User.IsInRole("Administrator"))
-            {
-                if (!isAnonumousUserCanEdit)
-                {
-                    return HttpNotFound();
-                }
-            }
-            return View("DeleteMobile", announcement);
-        }
-
-        [HttpGet]
-        public ActionResult DeleteConfirmedMobile(int id)
-        {
-            var announcement = _repository.Read(id);
-            if (announcement == null) return HttpNotFound();
-
-            var isAnonumousUserCanEdit = _anonymousUserService.IsUserCanEdit(id);
-            if (WebSecurity.CurrentUserId != announcement.UserId && !User.IsInRole("Administrator"))
-            {
-                if (!isAnonumousUserCanEdit)
-                {
-                    return HttpNotFound();
-                }
-            }
-
-            try
-            {
-                _repository.Delete(announcement);
-            }
-            catch (DataException de)
-            {
-                TempData["error"] = ProjectConfiguration.Get.DataErrorMessage;
-            }
-            return RedirectToAction("MyAnnouncementsMobile", "Bookmarks");
-        }
-
+        }        
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)

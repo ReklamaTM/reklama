@@ -25,6 +25,8 @@
                 url: "My/Realty",
                 defaults: new { controller = "Bookmarks", action = "MyRealty" });
 
+            routes.MapRoute("RealtyAskDelete", "Realty/{action}/{id}", new { controller = "Realty", action = "Index", id = UrlParameter.Optional });
+
             routes.MapRoute(
                 name: "MyAnnouncementBookmarks",
                 url: "My/Bookmarks/Announcemets",

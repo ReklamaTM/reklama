@@ -133,7 +133,7 @@
                         <p style="color: black">
                             <i class="fa fa-eye"></i> <span>@realty.Views</span>
                             <span class="float-right">
-                                <a href="@Url.Action("DeleteMobile", "Announcement", new { id = realty.Id })">
+                                <a href="@Url.Action("DeleteMobile", "Realty", new { id = realty.Id })">
                                     <i class="fa fa-trash-alt text-danger"></i>
                                 </a>
                             </span>
@@ -141,11 +141,11 @@
                             <span class="float-right mr-3">
                                 @if (realty.IsActive)
                                 {
-                                    <a href="#"><i class="fa fa-pause"></i> </a>
+                                    <a href="@Url.Action("PlayStopMobile", "Realty", new { id = realty.Id })" class="text-primary" title="Приостановить"><i class="fa fa-pause"></i> </a>
                                 }
                                 else
                                 {
-                                    <a href="#"><i class="fa fa-play"></i> </a>
+                                    <a href="@Url.Action("PlayStopMobile", "Realty", new { id = realty.Id })" class="text-success" title="Активировать"><i class="fa fa-play"></i> </a>
                                 }
                             </span>
                         </p>

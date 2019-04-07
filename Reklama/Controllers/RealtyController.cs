@@ -504,6 +504,94 @@ namespace Reklama.Controllers
             return View(realty);
         }
 
+        [HttpGet]
+        public ActionResult DeleteMobile(int id = 0)
+        {
+            var realty = _realtyRepository.Read(id);
+            if (realty == null) return HttpNotFound();
+
+            var isAnonumousUserCanEdit = _anonymousUserService.IsUserCanEdit(id);
+            if (WebSecurity.CurrentUserId != realty.UserId && !User.IsInRole("Administrator"))
+            {
+                if (!isAnonumousUserCanEdit)
+                {
+                    return HttpNotFound();
+                }
+            }
+            return View("DeleteMobile", realty);
+        }
+
+        [HttpGet]
+        public ActionResult PlayStopMobile(int id = 0)
+        {
+            var realty = _realtyRepository.Read(id);
+            if (realty == null) return HttpNotFound();
+
+            var isAnonumousUserCanEdit = _anonymousUserService.IsUserCanEdit(id);
+            if (WebSecurity.CurrentUserId != realty.UserId && !User.IsInRole("Administrator"))
+            {
+                if (!isAnonumousUserCanEdit)
+                {
+                    return HttpNotFound();
+                }
+            }
+            return View("PlayStopMobile", realty);
+        }
+
+        [HttpGet]
+        public ActionResult PlayStopConfirmedMobile(int id)
+        {
+            var realty = _realtyRepository.Read(id);
+            if (realty == null) return HttpNotFound();
+
+            var isAnonumousUserCanEdit = _anonymousUserService.IsUserCanEdit(id);
+            if (WebSecurity.CurrentUserId != realty.UserId && !User.IsInRole("Administrator"))
+            {
+                if (!isAnonumousUserCanEdit)
+                {
+                    return HttpNotFound();
+                }
+            }
+
+            try
+            {
+                realty.IsActive = !realty.IsActive;
+                _realtyRepository.Save(realty);
+            }
+            catch (DataException de)
+            {
+                TempData["error"] = ProjectConfiguration.Get.DataErrorMessage;
+            }
+            return RedirectToAction("MyAnnouncementsMobile", "Bookmarks");
+        }
+
+        [HttpGet]
+        public ActionResult DeleteConfirmedMobile(int id)
+        {
+            var announcement = _realtyRepository.Read(id);
+            if (announcement == null) return HttpNotFound();
+
+            var isAnonumousUserCanEdit = _anonymousUserService.IsUserCanEdit(id);
+            if (WebSecurity.CurrentUserId != announcement.UserId && !User.IsInRole("Administrator"))
+            {
+                if (!isAnonumousUserCanEdit)
+                {
+                    return HttpNotFound();
+                }
+            }
+
+            try
+            {
+                _realtyRepository.Delete(announcement);
+            }
+            catch (DataException de)
+            {
+                TempData["error"] = ProjectConfiguration.Get.DataErrorMessage;
+            }
+            return RedirectToAction("MyAnnouncementsMobile", "Bookmarks");
+        }
+
+
         public ActionResult AddToBookmarks(CategorySearchSortModel model)
         {
             var status = "success";
