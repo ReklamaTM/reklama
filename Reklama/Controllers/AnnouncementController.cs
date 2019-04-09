@@ -454,8 +454,7 @@ namespace Reklama.Controllers
             }
 
             return View(announcement);
-        }
-
+        }        
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)

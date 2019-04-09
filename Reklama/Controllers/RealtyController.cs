@@ -151,6 +151,36 @@ namespace Reklama.Controllers
         }
 
 
+
+        [CustomRealtyAuth]
+        public ActionResult CreateMobile()
+        {
+            var model = new Realty();
+            var userID = WebSecurity.CurrentUserId;
+            if (userID != -1)
+            {
+                var user = _profileRepository.Read(WebSecurity.CurrentUserId);
+                model.Phone = user.Phone;
+                model.ContactEmail = user.Email;
+                model.ContactName = user.Name;
+                model.IsDisplayPhone = true;
+            }
+
+            var sections = _sectionRepository.Read();
+            var categories = _categoryRepository.Read();
+            ViewBag.Cities = _cityRepository.Read();
+            ViewBag.Sections = sections;
+            ViewBag.Categories = categories;
+            ViewBag.Currencies = _currencyRepository.Read();
+            ViewBag.ExpiredAt = int.Parse(ProjectConfiguration.Get.GetConfigValue("ExpiredAtRealty").ToString());
+
+            try { model.SectionId = sections.FirstOrDefault(x => x.Name.ToLower().Contains("продам")).Id; } catch {}
+            try { model.CategoryId = categories.FirstOrDefault(x => x.Name.ToLower().Contains("квартир")).Id; } catch {}
+            model.Name = "empty name";
+            model.SmallDescription = "empty description";
+            return View("CreateMobile" ,model);
+        }
+
         [CustomRealtyAuth]
         public ActionResult Create()
         {
@@ -175,6 +205,54 @@ namespace Reklama.Controllers
             ViewBag.Currencies = _currencyRepository.Read();
             ViewBag.ExpiredAt = int.Parse(ProjectConfiguration.Get.GetConfigValue("ExpiredAtRealty").ToString());
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult CreateMobile(Realty realty, FormCollection collection)
+        {
+            if (realty.Floor > realty.FloorCount)
+            {
+                ModelState.AddModelError("Floor", "Значени поля 'На каком этаже' не может превышать общего кол-ва этажей в доме");
+            }
+            if (realty.IsAgency == true && realty.AgencyName.Length == 0)
+            {
+                ModelState.AddModelError("AgencyName", "Поле 'Название агенства' обязательно для заполнения");
+            }
+            //ViewBag.cError = "ModelState.IsValid = ";
+            ModelState.Remove("IsDisplayPhone");
+            if (ModelState.IsValid)
+            {
+                realty.CreatedAt = realty.UpTime = DateTime.Now;
+                realty.ExpiredAt = DateTime.Now.AddDays(int.Parse(ProjectConfiguration.Get.GetConfigValue("ExpiredAtRealty").ToString()));
+                realty.UserId = WebSecurity.CurrentUserId;
+                realty.Views = 0;
+                realty.IsActive = true;
+                realty.IsDisplayPhone = true;
+
+                realty.Description = Helper.RemoveTextFromText(realty.Description, "width", ";");
+
+                var images = collection["images[]"];
+                int id = _realtyRepository.Save(realty, images);
+                if (id > 0 && WebSecurity.CurrentUserId == -1 && ProjectConfiguration.IsAnonymousUserAllowed)
+                {
+                    var cookieName = "realty" + id;
+                    var newCookie = new HttpCookie(cookieName, id.ToString())
+                    {
+                        Expires = DateTime.Now.AddYears(1),
+                        Domain = ".reklama.tm"
+                    };
+                    HttpContext.Response.Cookies.Add(newCookie);
+                }
+                //return RedirectToAction("Details", "Realty", new { Id = id });
+                return Redirect("http://jay.reklama.tm/Details/" + id);
+            }
+            ViewBag.Cities = _cityRepository.Read();
+            ViewBag.Sections = _sectionRepository.Read();
+            ViewBag.Categories = _categoryRepository.Read();
+            ViewBag.Currencies = _currencyRepository.Read();
+            ViewBag.UploadedImages = (collection["images[]"] != null) ? collection["images[]"].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries) : null;
+            return View(realty);
         }
 
         [HttpPost]
@@ -425,6 +503,94 @@ namespace Reklama.Controllers
 
             return View(realty);
         }
+
+        [HttpGet]
+        public ActionResult DeleteMobile(int id = 0)
+        {
+            var realty = _realtyRepository.Read(id);
+            if (realty == null) return HttpNotFound();
+
+            var isAnonumousUserCanEdit = _anonymousUserService.IsUserCanEdit(id);
+            if (WebSecurity.CurrentUserId != realty.UserId && !User.IsInRole("Administrator"))
+            {
+                if (!isAnonumousUserCanEdit)
+                {
+                    return HttpNotFound();
+                }
+            }
+            return View("DeleteMobile", realty);
+        }
+
+        [HttpGet]
+        public ActionResult PlayStopMobile(int id = 0)
+        {
+            var realty = _realtyRepository.Read(id);
+            if (realty == null) return HttpNotFound();
+
+            var isAnonumousUserCanEdit = _anonymousUserService.IsUserCanEdit(id);
+            if (WebSecurity.CurrentUserId != realty.UserId && !User.IsInRole("Administrator"))
+            {
+                if (!isAnonumousUserCanEdit)
+                {
+                    return HttpNotFound();
+                }
+            }
+            return View("PlayStopMobile", realty);
+        }
+
+        [HttpGet]
+        public ActionResult PlayStopConfirmedMobile(int id)
+        {
+            var realty = _realtyRepository.Read(id);
+            if (realty == null) return HttpNotFound();
+
+            var isAnonumousUserCanEdit = _anonymousUserService.IsUserCanEdit(id);
+            if (WebSecurity.CurrentUserId != realty.UserId && !User.IsInRole("Administrator"))
+            {
+                if (!isAnonumousUserCanEdit)
+                {
+                    return HttpNotFound();
+                }
+            }
+
+            try
+            {
+                realty.IsActive = !realty.IsActive;
+                _realtyRepository.Save(realty);
+            }
+            catch (DataException de)
+            {
+                TempData["error"] = ProjectConfiguration.Get.DataErrorMessage;
+            }
+            return RedirectToAction("MyAnnouncementsMobile", "Bookmarks");
+        }
+
+        [HttpGet]
+        public ActionResult DeleteConfirmedMobile(int id)
+        {
+            var announcement = _realtyRepository.Read(id);
+            if (announcement == null) return HttpNotFound();
+
+            var isAnonumousUserCanEdit = _anonymousUserService.IsUserCanEdit(id);
+            if (WebSecurity.CurrentUserId != announcement.UserId && !User.IsInRole("Administrator"))
+            {
+                if (!isAnonumousUserCanEdit)
+                {
+                    return HttpNotFound();
+                }
+            }
+
+            try
+            {
+                _realtyRepository.Delete(announcement);
+            }
+            catch (DataException de)
+            {
+                TempData["error"] = ProjectConfiguration.Get.DataErrorMessage;
+            }
+            return RedirectToAction("MyAnnouncementsMobile", "Bookmarks");
+        }
+
 
         public ActionResult AddToBookmarks(CategorySearchSortModel model)
         {

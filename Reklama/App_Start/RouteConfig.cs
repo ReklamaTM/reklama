@@ -25,6 +25,8 @@
                 url: "My/Realty",
                 defaults: new { controller = "Bookmarks", action = "MyRealty" });
 
+            routes.MapRoute("RealtyAskDelete", "Realty/{action}/{id}", new { controller = "Realty", action = "Index", id = UrlParameter.Optional });
+
             routes.MapRoute(
                 name: "MyAnnouncementBookmarks",
                 url: "My/Bookmarks/Announcemets",
@@ -63,6 +65,11 @@
                 name: "IgnoreRedirectRealtyCreate",
                 url: "Realty/Create",
                 defaults: new { controller = "Realty", action = "Create" });
+
+            routes.MapRoute(
+               name: "IgnoreRedirectRealtyCreateMobile",
+               url: "Realty/CreateMobile",
+               defaults: new { controller = "Realty", action = "CreateMobile" });
 
             routes.MapRoute(
                 name: "IgnoreRedirectRealtyEdit",
