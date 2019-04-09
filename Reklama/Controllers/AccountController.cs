@@ -18,7 +18,7 @@ namespace Reklama.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]
-    public class AccountController : Controller
+    public class AccountController : _BaseController
     {
         // For line #282
         private readonly IProfileRepository _profileRepository;
@@ -37,7 +37,34 @@ namespace Reklama.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            //return View("Login");
+            return IsMobileDevice() ? View("LoginMobile") : View("Login");
+        }
+
+        [AllowAnonymous]
+        public ActionResult LoginMobile(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            if (WebSecurity.IsAuthenticated) return RedirectToAction("MyAnnouncementsMobile", "Bookmarks");
+            else return View("LoginMobile");
+        }
+
+        //
+        // POST: /Account/LoginMobile
+
+        [HttpPost]
+        [AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        public ActionResult LoginMobile(LoginModel model, string returnUrl)
+        {
+            if (ModelState.IsValid && WebSecurity.Login(model.Email, model.Password, persistCookie: model.RememberMe))
+            {
+                return (returnUrl != null) ? RedirectToLocal(returnUrl) : RedirectToAction("MyAnnouncementsMobile", "Bookmarks");
+            }
+
+            // If we got this far, something failed, redisplay form
+            ModelState.AddModelError("", "Неверно введен Email или пароль");
+            return View(model);
         }
 
         //
@@ -66,7 +93,14 @@ namespace Reklama.Controllers
         public ActionResult LogOff()
         {
             WebSecurity.Logout();
-            
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public ActionResult LogOffAlternative ()
+        {
+            WebSecurity.Logout();
             return RedirectToAction("Index", "Home");
         }
 

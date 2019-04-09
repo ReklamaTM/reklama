@@ -12,11 +12,13 @@ using WebMatrix.WebData;
 using PagedList;
 using Reklama.Models;
 using Domain.Repository.Catalogs;
+using System.Web.Security;
+using Domain.Repository.Shared;
 
 namespace Reklama.Controllers
 {
     [Authorize]
-    public class BookmarksController : Controller
+    public class BookmarksController : _BaseController
     {
         private ReklamaContext rc = new ReklamaContext();
 
@@ -26,13 +28,15 @@ namespace Reklama.Controllers
         private IRealtyBookmarkRepository _realtyBookmarksRepository;
         private readonly IConfigRepository _configRepository;
         private readonly IProductBookmarkRepository _productBookmarkRepository;
+        private readonly IProfileRepository _profileRepository;
 
         public BookmarksController(
             IAnnouncementBookmarkRepository bookmarkRepository,
             IAnnouncementRepository announcementRepository,
             IConfigRepository configRepository,
             IRealtyBookmarkRepository realtyBookmarksRepository,
-            IRealtyRepository realtyRepository, IProductBookmarkRepository productBookmarkrepository)
+            IRealtyRepository realtyRepository, IProductBookmarkRepository productBookmarkrepository,
+            IProfileRepository profileRepository)
         {
             _bookmarkRepository = bookmarkRepository;
             _bookmarkRepository.Context = rc;
@@ -51,6 +55,9 @@ namespace Reklama.Controllers
 
             _productBookmarkRepository = productBookmarkrepository;
             _productBookmarkRepository.Context = rc;
+
+            _profileRepository = profileRepository;
+            _profileRepository.Context = rc;
         }
 
 
@@ -86,6 +93,38 @@ namespace Reklama.Controllers
             ViewBag.Title = "Мои закладки";
 
             return View(products.ToPagedList(sortModel.CurrentPage.Value, sortModel.PageSize));
+        }
+
+
+        public ActionResult MyAnnouncementsMobile(PagerSortModel sortModel = null)
+        {
+            //var myAnnouncements = _announcementRepository.ReadByUser(_announcementRepository.Read(), WebSecurity.CurrentUserId);
+            ViewBag.UpTimeAnnouncement = int.Parse(_configRepository.ReadByName("UpTimeAnnouncement").Value);
+            ViewBag.SortModel = sortModel;
+            ViewBag.Title = "Мои объявления";
+            ViewBag.IsAdmin = false;
+            try
+            {
+                var user = _profileRepository.Read(WebSecurity.CurrentUserId);
+                if (user != null)
+                {
+                    ViewBag.UserName = user.Name;
+                    ViewBag.UserSurName = user.Surname;
+                    ViewBag.Site = user.Site;
+                    ViewBag.Skype = user.Skype;
+                    ViewBag.Icq = user.Icq;
+                }
+            } catch { }
+            if (Roles.IsUserInRole(WebSecurity.CurrentUserName, "Administrator"))
+            {
+                ViewBag.IsAdmin = true;
+                var model = _realtyRepository.Read().OrderByDescending(x => x.CreatedAt);
+                return View("MyAnnouncementsMobile", model.ToPagedList(sortModel.CurrentPage.Value, sortModel.PageSize));
+            } else
+            {
+                var model = _realtyRepository.Read().Where(x => x.UserId == WebSecurity.CurrentUserId).OrderByDescending(x => x.CreatedAt);
+                return View("MyAnnouncementsMobile", model.ToPagedList(sortModel.CurrentPage.Value, sortModel.PageSize));
+            }
         }
 
         //
