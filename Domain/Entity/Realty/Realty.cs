@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Entity.Realty
 {
-    public class Realty: SearchProviderEntity
+    public class Realty : SearchProviderEntity
     {
         //public DateTime CreatedAt { get; set; }
         public DateTime ExpiredAt { get; set; }
@@ -46,7 +46,7 @@ namespace Domain.Entity.Realty
         [Column(TypeName = "money")]
         [Display(Name = "'Цена'")]
         [Range(0, double.MaxValue)]
-        [DataType(DataType.Currency, ErrorMessage="Должно быть введено вещественное число")]
+        [DataType(DataType.Currency, ErrorMessage = "Должно быть введено вещественное число")]
         [DisplayFormat(DataFormatString = "{0:0.####}")]
         public decimal? Price { get; set; }
 
@@ -117,5 +117,42 @@ namespace Domain.Entity.Realty
 
         public virtual ICollection<RealtyPhoto> Photos { get; set; }
         public virtual ICollection<RealtyComment> Comments { get; set; }
+
+        public double? PriceForOneMeter
+        {
+            get
+            {
+                if (Price != null && Square != null) return (double)Price / Square;
+                else return null;
+            }
+        }
+
+        public string DescriptionView
+        {
+            get
+            {
+                var result = string.Empty;
+                if (RoomsCount != null) result += RoomsCount + " ком. кв";
+                if (Square != null)
+                {
+                    if (RoomsCount != null) result += ", " + Square + "м<sup>2</sup>";
+                    else result += Square + "м<sup>2</sup>";
+                }
+                if (Floor != null)
+                {
+                    if (FloorCount != null)
+                    {
+                        if (RoomsCount != null || Square != null) result += ", " + Floor + "/" + FloorCount + " эт.";
+                        else result += Floor + "/" + FloorCount + " эт.";
+                    }
+                    else
+                    {
+                        if (RoomsCount != null || Square != null) result += ", " + Floor + " эт.";
+                        else result += Floor + " эт.";
+                    }
+                }
+                return result;
+            }
+        }
     }
 }

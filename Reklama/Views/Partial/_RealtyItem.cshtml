@@ -1,5 +1,4 @@
 ﻿@model Domain.Entity.Realty.Realty
-@using System.Globalization
 
 <div class="item blue">
     <div class="bg blue"></div>
@@ -58,35 +57,51 @@
         }
     </div>
     <div class="info">
-        <p>
-            <i class="fa fa-map-marker"></i> @Model.City, @Model.Street
-        </p>
-        <p>
-            <i class="fa fa-cube"></i>
-            @if (Model.FloorCount != null)
-            {
-                @Model.FloorCount <span> комн.квартира</span>
-            }
-            @if (Model.Square != null)
-            {
-                <span>,</span> @Model.Square <span> кв.м</span>
-            }
-            @if (Model.Floor != null)
-            {
-                <span>,</span> @Model.Floor <span> эт.</span>
-            }
-        </p>
-        <p>
-            @if (Model.Currency != null && Model.Price != null)
-            {
-                <i class="fa fa-shopping-cart"></i> @Math.Round(((decimal)Model.Currency.Rate * Model.Price.Value), 2).ToString("0.#####", CultureInfo.InvariantCulture)
-            }
-            else
-            {
-                <i class="fa fa-shopping-cart"></i> <span>0</span>
-            }
-            <i class="fa fa-dollar-sign"></i>
-        </p>
+        <div class="line">
+            <div class="icon">
+                <i class="fa fa-map-marker"></i>
+            </div>
+            <div class="text">
+                @Model.City, @Model.Street
+            </div>
+        </div>
+        <div class="line">
+            <div class="icon">
+                <i class="fa fa-cube"></i>
+            </div>
+            <div class="text">
+                @Html.Raw(Model.DescriptionView)
+            </div>
+        </div>
+        <div class="line">
+            <div class="icon">
+                <i class="fa fa-shopping-cart"></i>
+            </div>
+            <div class="text">
+                @if (Model.Currency != null && Model.Price != null)
+                {
+                    @String.Format("{0:n0}" ,Math.Round(((decimal)Model.Currency.Rate * Model.Price.Value), 2))
+                    //.ToString("0.#####", CultureInfo.CreateSpecificCulture("fr-CA"))
+                }
+                else
+                {
+                    <span>0</span>
+                }
+                $
+            </div>
+        </div>
+        @if (WebSecurity.IsAuthenticated && Model.PriceForOneMeter != null)
+        {
+            <div class="line">
+                <div class="icon">
+                    <i class="fa fa-shopping-basket"></i>
+                </div>
+                <div class="text">
+                    @String.Format("{0:n0}", Model.PriceForOneMeter)
+                    $/м<sup>2</sup>
+                </div>
+            </div>
+        }
     </div>
 
 </div>
