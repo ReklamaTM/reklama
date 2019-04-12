@@ -14,6 +14,8 @@ using Domain.Repository.Announcements;
 using Domain.Entity.Announcements;
 using Reklama.Models.ViewModels.Announcement;
 using PagedList;
+using Reklama.ViewModels.Filters;
+using Domain.Repository.Shared;
 
 namespace Reklama.Controllers
 {
@@ -28,6 +30,7 @@ namespace Reklama.Controllers
         private readonly IRealtyRepository _realtyRepository;
         private readonly IAnnouncementRepository _announcementRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly ICityRepository _cityRepository;
 
         public HomeController(IPopularSectionInCatalogRepository popularSectionInCatalogRepository,
                             IPopularAnnouncementRepository popularAnnoucementRepository,
@@ -35,7 +38,8 @@ namespace Reklama.Controllers
                             IPopularProductRepository popularProductRepository,
                             IRealtyRepository realtyRepository,
                             IAnnouncementRepository announcementRepository,
-                            ICategoryRepository categoryRepository)
+                            ICategoryRepository categoryRepository,
+                            ICityRepository cityRepositrory)
         {
             _popularSectionCatalogRepository = popularSectionInCatalogRepository;
             _popularSectionCatalogRepository.Context = rc;
@@ -60,6 +64,9 @@ namespace Reklama.Controllers
 
             _categoryRepository = categoryRepository;
             _categoryRepository.Context = rc;
+
+            _cityRepository = cityRepositrory;
+            _cityRepository.Context = rc;
         }
 
         public ActionResult Index()
@@ -79,7 +86,50 @@ namespace Reklama.Controllers
 
         public ActionResult FiltersMobile()
         {
-            return View("FiltersMobile");
+            var model = FillFiltersModelList(null);
+            return View("FiltersMobile", model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Filter(FiltersViewModel model = null)
+        {
+            model.IsFiltered = true;
+            var result = _realtyRepository.Read();
+            if (model.CityId > 0) result = result.Where(x => x.CityId == model.CityId);
+            if (!string.IsNullOrEmpty(model.Description)) result = result.Where(x => x.Description.ToLower().Contains(model.Description.ToLower()));
+            if (model.Rooms > 0) result = result.Where(x => x.RoomsCount == model.Rooms);
+            if (model.LevelFrom > 0) result = result.Where(x => x.Floor >= model.LevelFrom);
+            if (model.LevelTo > 0) result = result.Where(x => x.Floor <= model.LevelTo);
+            if (model.SquareFrom > 0) result = result.Where(x => x.Square >= model.SquareFrom);
+            if (model.SquareTo > 0) result = result.Where(x => x.Square <= model.SquareTo);
+            switch(model.FieldSort)
+            {
+                case 1:
+                    model.Realties = model.DirectionSort == 1 ? result.OrderBy(x => x.Price).ToList() : result.OrderByDescending(x => x.Price).ToList();
+                    break;
+
+                case 2:
+                    model.Realties = model.DirectionSort == 1 ? result.OrderBy(x => x.CreatedAt).ToList() : result.OrderByDescending(x => x.CreatedAt).ToList();
+                    break;
+
+                case 3:
+                    model.Realties = model.DirectionSort == 1 ? result.OrderBy(x => x.Square).ToList() : result.OrderByDescending(x => x.Square).ToList();
+                    break;
+
+                case 4:
+                    model.Realties = model.DirectionSort == 1 ? result.OrderBy(x => (double)x.Price / x.Square).ToList() : result.OrderByDescending(x => (double)x.Price / x.Square).ToList();
+                    break;
+            }
+            //model.Realties = result.OrderByDescending(x=>x.CreatedAt).ToList();
+            model = FillFiltersModelList(model);
+            return View("FiltersMobile", model);
+        }
+
+        private FiltersViewModel FillFiltersModelList (FiltersViewModel model = null)
+        {
+            if (model == null) model = new FiltersViewModel();
+            model.Cities = _cityRepository.Read();
+            return model;
         }
 
         [ChildActionOnly]
