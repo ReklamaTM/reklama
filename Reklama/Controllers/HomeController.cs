@@ -91,7 +91,7 @@ namespace Reklama.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Filter(FiltersViewModel model = null)
+        public ActionResult FiltersMobile(FiltersViewModel model = null)
         {
             model.IsFiltered = true;
             var result = _realtyRepository.Read();
