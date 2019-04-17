@@ -127,6 +127,18 @@ namespace Domain.Entity.Realty
             }
         }
 
+        public string Address {
+            get {
+                var result = string.Empty;
+                if (City != null) result += City.Name;
+                if (Street != null)
+                {
+                    result += ", " + Street;
+                }
+                return result;
+            }
+        }
+
         public string DescriptionView
         {
             get
@@ -135,8 +147,8 @@ namespace Domain.Entity.Realty
                 if (RoomsCount != null) result += RoomsCount + " ком. кв";
                 if (Square != null)
                 {
-                    if (RoomsCount != null) result += ", " + Square + "м<sup>2</sup>";
-                    else result += Square + "м<sup>2</sup>";
+                    if (RoomsCount != null) result += ", " + Square + " м<sup>2</sup>";
+                    else result += Square + " м<sup>2</sup>";
                 }
                 if (Floor != null)
                 {

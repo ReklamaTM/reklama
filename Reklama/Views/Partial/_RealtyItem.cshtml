@@ -1,4 +1,5 @@
 ﻿@model Domain.Entity.Realty.Realty
+@using System.Globalization
 
 <div class="item blue">
     <div class="bg blue"></div>
@@ -62,7 +63,7 @@
                 <i class="fa fa-map-marker"></i>
             </div>
             <div class="text">
-                @Model.City, @Model.Street
+                @Model.Address
             </div>
         </div>
         <div class="line">
@@ -80,28 +81,30 @@
             <div class="text">
                 @if (Model.Currency != null && Model.Price != null)
                 {
-                    @String.Format("{0:n0}" ,Math.Round(((decimal)Model.Currency.Rate * Model.Price.Value), 2))
+                    var nfi = (NumberFormatInfo)CultureInfo.InvariantCulture.NumberFormat.Clone();
+                    nfi.NumberGroupSeparator = " ";
+                    @Math.Round(((decimal)Model.Currency.Rate * Model.Price.Value), 2).ToString("#,0", nfi)
+                    @*@String.Format("{0:n0}", Math.Round(((decimal)Model.Currency.Rate * Model.Price.Value), 2))*@
                     //.ToString("0.#####", CultureInfo.CreateSpecificCulture("fr-CA"))
                 }
                 else
                 {
                     <span>0</span>
                 }
-                $
-            </div>
-        </div>
-        @if (WebSecurity.IsAuthenticated && Model.PriceForOneMeter != null)
-        {
-            <div class="line">
-                <div class="icon">
-                    <i class="fa fa-shopping-basket"></i>
-                </div>
-                <div class="text">
+                $ &nbsp;&nbsp;&nbsp;
+
+                @if (WebSecurity.IsAuthenticated && Model.PriceForOneMeter != null)
+                {
+                <span>
                     @String.Format("{0:n0}", Model.PriceForOneMeter)
                     $/м<sup>2</sup>
-                </div>
+                </span>
+                }
+
+
             </div>
-        }
+        </div>
+        
     </div>
 
 </div>

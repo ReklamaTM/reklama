@@ -106,7 +106,8 @@
         flex-basis: 25px;
     }
 
-    .main-pub-items .item .info .line .text{
+    .main-pub-items .item .info .line .text {
+        color: rgba(44, 43, 43, 0.85)
     }
 
 
