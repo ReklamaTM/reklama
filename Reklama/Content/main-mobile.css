@@ -516,3 +516,288 @@ a.article:hover {
     .profile-header-wrapper .info .personal p {
         margin-bottom: 5px;
     }
+
+
+
+/*.registerInW div {
+    color: #4c4c4c;
+    font: 11px Arial;
+    padding-bottom: 25px;
+}*/
+
+.registerInW .borderReg {
+    border-top: 1px solid #d7dde0;
+    padding-top: 24px;
+    padding-bottom: 0;
+    margin-right: 35px;
+    /*color: #4c4c4c;
+        font: 11px Arial;
+        padding-bottom: 25px;*/
+}
+
+    .registerInW .borderReg .fieldItem {
+        min-height: 20px;
+        position: relative;
+        color: #4c4c4c;
+        font: 11px Arial;
+        padding-bottom: 25px;
+    }
+
+    .registerInW .borderReg .rightText {
+        color: #4c4c4c;
+        font: 11px Arial;
+        left: 765px;
+        float: none;
+        margin-right: 10px;
+        clear: none;
+        width: auto;
+        top: 22px;
+        position: absolute;
+        color: #4c4c4c;
+        font: 11px Arial;
+        padding-bottom: 25px;
+    }
+
+.registerInW .regBtm {
+    width: 580px;
+    margin: 35px 0 0;
+    padding: 0;
+    color: #4c4c4c;
+    font: 11px Arial;
+    padding-bottom: 25px;
+}
+
+    .registerInW .regBtm a {
+        color: #004bb9;
+        font: 12px Arial;
+    }
+
+    .registerInW .regBtm input {
+        padding: 0;
+        margin-left: 211px;
+        background: url(/Images/System/regBut2.gif) no-repeat top left transparent;
+        width: 350px;
+        border: none;
+        cursor: pointer;
+        height: 55px;
+    }
+
+        .registerInW .regBtm input.regBut3 {
+            padding: 0;
+            margin-left: 43px;
+            background: url(/Images/System/regBut3.gif) no-repeat top left transparent;
+            width: 350px;
+            border: none;
+            cursor: pointer;
+            height: 55px;
+        }
+
+    .registerInW .regBtm p {
+        width: 350px;
+        margin-left: 210px;
+        margin-top: 10px;
+        text-align: center;
+        color: #6f6f6f;
+        font: 11px Arial;
+    }
+
+.registerInW .borderReg .field-title {
+    color: #4c4c4c;
+    font: bold 13px Arial;
+    float: left;
+    width: 210px;
+    margin-top: 3px;
+    height: 35px;
+}
+
+    .registerInW .borderReg .field-title.regBrown {
+        color: #713918;
+    }
+
+    .registerInW .borderReg .field-title.regRed {
+        color: #ff3b38;
+    }
+
+.registerInW .borderReg em {
+    margin-left: 210px;
+    color: #546d7f;
+    font: bold 16px Arial;
+    padding-bottom: 21px;
+    float: left;
+    width: 400px;
+}
+
+.registerInW .borderReg input.regInp1 {
+    color: #4c4c4c;
+    font: 12px Arial;
+    padding: 3px 5px;
+    width: 218px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    background: url("/Images/System/regInpBg.png") repeat-x scroll 0 top #ffffff;
+    border: 1px solid #C9D1D6;
+}
+
+    .registerInW .borderReg input.regInp1 + p {
+        margin-left: 77px;
+        width: 150px;
+    }
+
+.registerInW .borderReg input.regInp2 {
+    color: #4c4c4c;
+    font: 12px Arial;
+    padding: 3px 5px;
+    width: 730px;
+    background: url("/Images/System/regInpBg.png") repeat-x scroll 0 top #ffffff;
+    border: 1px solid #C9D1D6;
+}
+
+.registerInW .borderReg select.regInp2 {
+    color: #4c4c4c;
+    font: 12px Arial;
+    padding: 10px 50px;
+    width: 218px;
+    background: url("/Images/System/regInpBg.png") repeat-x scroll 0 top #ffffff;
+    border: 1px solid #C9D1D6;
+}
+
+.registerInW .borderReg input.regBut1 {
+    width: 174px;
+    height: 29px;
+    border: none;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-right: 8px;
+    background: url(/Images/System/regBut1.gif) no-repeat top left transparent;
+}
+
+.registerInW .borderReg textarea {
+    height: 122px;
+    width: 730px;
+    resize: none;
+    overflow: auto;
+    font: 12px Arial;
+    color: #4c4c4c;
+    background: url("/Images/System/regInpBg.png") repeat-x scroll 0 top #ffffff;
+    border: 1px solid #C9D1D6;
+    padding: 3px 5px;
+}
+
+.registerInW .borderReg label {
+    margin-top: 3px;
+    float: left;
+    /*width: 105px;*/
+}
+
+    .registerInW .borderReg label.checkbox-label {
+        margin-top: 3px;
+        float: none;
+    }
+
+.registerInW .borderReg .checkbox-input {
+    position: relative;
+    vertical-align: middle;
+    bottom: 1px;
+}
+
+.registerInW .borderReg.head label {
+    width: 105px;
+}
+
+.registerInW p {
+    text-align: right;
+    color: #4c4c4c;
+    font: 11px Arial;
+    width: 610px;
+    margin-left: 130px;
+    margin-top: 4px;
+    margin-bottom: -6px;
+}
+
+    .registerInW p b {
+        color: #ff2121;
+        font: 14px Arial;
+        margin-right: 3px;
+    }
+
+    .registerInW p.check {
+        text-align: left;
+        color: #4c4c4c;
+        font: 11px Arial;
+        width: 350px;
+        margin-left: 210px;
+        margin-top: 4px;
+        margin-bottom: 0; /*исправлено*/
+        display: inline;
+        margin-left: 0;
+    }
+
+        .registerInW p.check label {
+            float: none;
+            color: #ff732e;
+            font: bold 12px Arial;
+        }
+
+        .registerInW p.check input {
+            /*float: left;*/
+            vertical-align: middle;
+            margin: 1px 8px 0 0;
+        }
+
+.registerInW .regCapcha {
+    width: 350px;
+    clear: both;
+    padding: 0;
+    margin-left: 210px;
+    margin-top: -13px;
+}
+
+.registerInW .refresh span {
+    float: none;
+    border-bottom: 1px dotted;
+    color: #BA575D;
+    cursor: pointer;
+    font: 11px/15px Arial,Verdana;
+}
+
+.registerInW .regCapcha input {
+    width: 203px;
+}
+
+.registerInW .borderReg input.regInp3 {
+    color: #4c4c4c;
+    font: 12px Arial;
+    padding: 3px 5px;
+    width: 88px;
+    margin-right: 8px;
+    background: url("/Images/System/regInpBg.png") repeat-x scroll 0 top #ffffff;
+    border: 1px solid #C9D1D6;
+}
+
+.registerInW .regCapcha p {
+    text-align: left !important;
+    margin: 0;
+    margin-bottom: 5px;
+}
+
+.registerInW input.regBut {
+    margin-top: 24px;
+    margin-left: 210px;
+    background: url(/Images/System/regBut.png) no-repeat top left transparent;
+    width: 350px;
+    height: 55px;
+    cursor: pointer;
+    border: none;
+}
+
+.regRad {
+    margin: 4px 6px 4px 0;
+    float: left;
+    vertical-align: middle;
+}
+
+.registerInW input.inpCheck {
+    float: left;
+    vertical-align: middle;
+    margin: 5px 6px 0 0;
+}

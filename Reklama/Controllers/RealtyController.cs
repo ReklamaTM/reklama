@@ -232,7 +232,7 @@ namespace Reklama.Controllers
 
                 realty.Description = Helper.RemoveTextFromText(realty.Description, "width", ";");
 
-                var images = collection["images[]"];
+                var images = collection["imagesNames[]"];
                 int id = _realtyRepository.Save(realty, images);
                 if (id > 0 && WebSecurity.CurrentUserId == -1 && ProjectConfiguration.IsAnonymousUserAllowed)
                 {
