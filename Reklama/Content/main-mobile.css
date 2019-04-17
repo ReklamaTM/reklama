@@ -97,6 +97,20 @@
     flex-basis: 95%;
 }
 
+.main-pub-items .item .info .line {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+    .main-pub-items .item .info .line .icon {
+        flex-basis: 25px;
+    }
+
+    .main-pub-items .item .info .line .text {
+        color: rgba(44, 43, 43, 0.85)
+    }
+
+
 .main-pub-items .item .info .announce-info {
     display: flex;
     flex-flow: row nowrap;

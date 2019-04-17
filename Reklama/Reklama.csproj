@@ -668,6 +668,7 @@
     <Compile Include="ViewModels\Catalog\FeedbackViewModel.cs" />
     <Compile Include="ViewModels\Catalog\ManufacturersMenuViewModel.cs" />
     <Compile Include="ViewModels\Catalog\ProductFeedbacksPageViewModel.cs" />
+    <Compile Include="ViewModels\Filters\FiltersViewModel.cs" />
     <Compile Include="ViewModels\Shops\CategoriesViewModel.cs" />
     <Compile Include="ViewModels\Shops\ProductForShopViewModel.cs" />
     <Compile Include="ViewModels\Shops\ShopCommentsPageViewModel.cs" />
@@ -3486,6 +3487,7 @@
     <Content Include="Views\Bookmarks\MyAnnouncementsMobile.cshtml" />
     <Content Include="Views\Realty\DeleteMobile.cshtml" />
     <Content Include="Views\Realty\PlayStopMobile.cshtml" />
+    <Content Include="Views\Partial\_RealtyItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
