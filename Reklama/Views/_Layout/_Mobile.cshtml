@@ -85,7 +85,7 @@
         </script>*@
 
 
-    
+
 
     @Scripts.Render("~/bundles/js/bootstrap")
 
@@ -93,6 +93,9 @@
 
     @*@Scripts.Render("~/Scripts/jquery.mCustomScrollbar.js")*@
     @*<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>*@
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             //jQuery_1_10_2("#sidebar").mCustomScrollbar({
@@ -109,6 +112,22 @@
                 $('.overlay').addClass('active');
                 $('.collapse.in').toggleClass('in');
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+            });
+
+            $(".item-short").on("click", function () {
+                var id = $(this).data("id");
+                $("#item-details" + id).show("blind", "fast", function () {
+                    $("#item" + id).hide("blind", "fast");
+                    $(this).css("display", "flex");
+                });
+
+            });
+
+            $(".item-details-btn").on("click", function () {
+                var id = $(this).data("id");
+                $("#item" + id).show("blind", "fast", function () {
+                    $("#item-details" + id).hide("blind", "fast");
+                });
             });
         });
     </script>
