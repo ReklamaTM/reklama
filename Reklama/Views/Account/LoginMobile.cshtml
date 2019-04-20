@@ -29,6 +29,10 @@
             @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password", aria_label = "Password", aria_describedby = "basic-addon1" })
             @*<input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">*@
         </div>
+        <div class="form-group d-flex justify-content-center align-items-center">
+            @Html.CheckBoxFor(m => m.RememberMe)
+            @Html.LabelFor(m => m.RememberMe, htmlAttributes: new { style = "margin: 0 0 0 10px; " })
+        </div>
 
         if (ViewBag.ReturnUrl != null)
         {

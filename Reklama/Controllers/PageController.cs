@@ -10,7 +10,7 @@ using Reklama.Models;
 
 namespace Reklama.Controllers
 {
-    public class PageController : Controller
+    public class PageController : _BaseController
     {
         private ReklamaContext rc = new ReklamaContext();
 
@@ -22,20 +22,19 @@ namespace Reklama.Controllers
             _pageRepository.Context = rc;
         }
 
-
         public ActionResult Details(int id)
         {
             var page = _pageRepository.Read(id);
-
-            if(page == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(page);
+            if(page == null) return HttpNotFound();
+            return IsMobileDevice() ? View("DetailsMobile", page) : View("Details", page);
         }
 
-
+        public ActionResult DetailsMobile(int id)
+        {
+            var page = _pageRepository.Read(id);
+            if (page == null) return HttpNotFound();
+            return View("DetailsMobile", page);
+        }
 
         protected override void Dispose(bool disposing)
         {
